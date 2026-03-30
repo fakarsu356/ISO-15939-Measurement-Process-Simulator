@@ -1,18 +1,18 @@
 # ISO 15939 Measurement Process Simulator
 
-1. Mimari Yapı :
-Uygulama, CardLayout kullanılarak tasarlanmış tek bir pencere (JFrame) üzerinden yönetilir. 5 ana adım (Profile, Define, Plan, Collect, Analyse) ayrı paneller olarak tanımlanmış ve butonlar aracılığıyla geçiş sağlanmıştır.
-Step Indicator: En üstte yer alan JLabel, HTML formatı kullanılarak dinamik olarak güncellenir; aktif adımı vurgular ve tamamlanan adımlara "✓" ekler.
-2. Adım Mantığı ve Validasyon:
-Step 1 (Profile): Kullanıcı verileri alınır. handleNext metodu içinde boş alan kontrolü yapılarak hata mesajı (JOptionPane) gösterilir.
-Step 2 (Define): Mod (Education/Health) seçimine göre senaryolar updateScenarios metoduyla dinamik olarak yüklenir. Radio butonları ButtonGroup ile tekli seçime zorlanır.
-3. Veri ve Hesaplama Mantığı:
-Step 3 & 4 (Plan & Collect): Seçilen senaryoya göre veriler loadStep3Data ve loadStep4Data metodlarıyla DefaultTableModel üzerine işlenir.
-Skor Formülü: calculateScore metodu, PDF'teki "Higher is better" ve "Lower is better" formüllerini uygular. Sonuçlar Math.round(s * 2) / 2.0 ile en yakın 0.5 değerine yuvarlanır.
-4. Analiz ve Sonuç (Step 5):
-Weighted Average: Metrik skorlarının ağırlıklı ortalaması hesaplanır ve sonuç 1-5 aralığından 0-100 yüzdesine çevrilerek JProgressBar üzerinde gösterilir.
-Gap Analysis: Hedef puan (5.0) ile mevcut puan arasındaki fark (Gap) hesaplanır ve puan eşiklerine göre (Excellent, Good, Poor) dinamik geri bildirim verilir.
-5. Teknik Detaylar:
-Dil: Java (SE 17+)
-Kütüphane: Java Swing & AWT
-Düzen: BorderLayout (Ana), GridLayout ve FlowLayout (Paneller).
+1. Architecture:
+The application is designed using a Wizard structure within a single JFrame, managed by a CardLayout. The 5 core steps (Profile, Define, Plan, Collect, Analyse) are implemented as separate JPanel components.
+Step Indicator: A dynamic JLabel at the top tracks progress using HTML formatting. It highlights the active step and marks completed steps with a "✓" symbol.
+2. Step Logic & Validation:
+Step 1 (Profile): Collects user and session data. The handleNext method performs validation to prevent empty fields using JOptionPane alerts.
+Step 2 (Define): Scenarios are dynamically loaded into the cbScenario ComboBox based on the selected Mode (Education/Health) via the updateScenarios method. ButtonGroup ensures mutual exclusivity for RadioButton selections.
+3. Data Processing & Scoring:
+Steps 3 & 4 (Plan & Collect): Data is populated into a DefaultTableModel based on the chosen scenario through loadStep3Data and loadStep4Data methods.
+Scoring Algorithm: The calculateScore method implements the "Higher is better" and "Lower is better" formulas defined in the ISO standard. Results are rounded to the nearest 0.5 increment using the Math.round(s * 2) / 2.0 logic as required.
+4. Analysis & Results (Step 5):
+Weighted Average: The application calculates the weighted average of metric scores. This value (on a 1-5 scale) is converted to a 0-100 percentage for visualization on a JProgressBar.
+Gap Analysis: It calculates the "Gap Value" (difference from the 5.0 target) and provides dynamic qualitative feedback (Excellent, Good, Needs Improvement, or Poor) based on score thresholds.
+5. Technical Specifications:
+Language: Java (SE 17 or higher)
+Libraries: Java Swing & AWT
+Layout Managers: BorderLayout (Main container), GridLayout, and FlowLayout (Step-specific panels).
